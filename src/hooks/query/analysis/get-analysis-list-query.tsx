@@ -11,12 +11,20 @@ export type GetAnalysisItems = {
   url: string;
   name: string;
   type: "quantitative" | "qualitative";
-  tags: string[];
+  display_image: boolean;
+  tags: Tag[];
   quantitative_analysis_entries_count: 0;
   file: string;
   analysis_date: string;
   diagnosis: string;
 };
+
+type Tag = {
+  url: string;
+  name: string;
+  background_color: string;
+  text_color: string;
+}
 
 type GetAnalysisReponse = PaginatedResponse<GetAnalysisItems>;
 

@@ -5,7 +5,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import type { CustomNextPage } from "@/types";
 import { WithDivider } from "@/components/with-divider";
-import { useDocumentsInfiniteQuery } from "@/hooks/query/documents/get-documents-query";
+import {
+  DocumentItem,
+  useDocumentsInfiniteQuery,
+} from "@/hooks/query/documents/get-documents-query";
+import { format } from "date-fns";
 
 const AnalysisPage: CustomNextPage = () => {
   return (
@@ -23,13 +27,14 @@ const AnalysisPage: CustomNextPage = () => {
             <TabsTrigger value="vaccination">Вакцинация</TabsTrigger>
           </TabsList>
         </div>
-        <DocumentsListTabs />
+        <DocsContent />
+        <VaccContent />
       </Tabs>
     </>
   );
 };
 
-const DocumentsListTabs: React.FC = () => {
+const DocsContent: React.FC = () => {
   const { data, isLoading } = useDocumentsInfiniteQuery();
 
   if (isLoading) {
@@ -41,56 +46,62 @@ const DocumentsListTabs: React.FC = () => {
   }
 
   return (
-    <>
-      <TabsContent value="docs">
-        <WithDivider>
-          {data.pages.flatMap((page) =>
-            page.results.map((_, i) => (
-              <div className="container" key={i}>
-                <DocumentPreviewItem status="active" key={i} />
-              </div>
-            )),
-          )}
-        </WithDivider>
-      </TabsContent>
-      <TabsContent value="vaccination">
-        <WithDivider>
-          {Array.from({ length: 10 }).map((_, i) => (
+    <TabsContent value="docs">
+      <WithDivider>
+        {data.pages.flatMap((page) =>
+          page.results.map((doc, i) => (
             <div className="container" key={i}>
-              <DocumentPreviewItem status="expired" key={i} />
+              <DocumentPreviewItem doc={doc} key={i} />
             </div>
-          ))}
-        </WithDivider>
-      </TabsContent>
-    </>
+          )),
+        )}
+      </WithDivider>
+    </TabsContent>
+  );
+};
+
+const VaccContent: React.FC = () => {
+  return (
+    <TabsContent value="vaccination">
+      <WithDivider>
+        {Array.from({ length: 10 }).map((doc, i) => (
+          <div className="container" key={i}>
+            <DocumentPreviewItem doc={doc} key={i} />
+          </div>
+        ))}
+      </WithDivider>
+    </TabsContent>
   );
 };
 
 const DocumentPreviewItem: React.FC<{
-  status: "active" | "expired";
-}> = ({ status }) => {
+  doc: DocumentItem;
+}> = ({ doc }) => {
   return (
     <div className="flex flex-row space-x-5 py-4">
       <div>
-        <div className="h-16 w-16 rounded-xs bg-gray-500" />
+        <div className="relative h-16 w-16">
+          <img className="rounded-xs object-cover" src={doc.file} />
+        </div>
       </div>
       <div className="flex w-full flex-col space-y-2">
         <div className="flex flex-row items-center justify-between">
-          <h3 className="text-lg font-semibold">Справка о прививке</h3>
-          {status === "expired" && (
+          <h3 className="text-lg font-semibold">{doc.title}</h3>
+          {doc.expired ? (
             <Badge className="uppercase" variant={"destructive"}>
               Просрочена
             </Badge>
-          )}
-          {status === "active" && (
+          ) : (
             <Badge className="uppercase" variant={"success"}>
               Активна
             </Badge>
           )}
         </div>
         <div>
-          <p>Дата выдачи: 12.12.2021</p>
-          <p>Справка о прививке от коронавируса</p>
+          <p>
+            Дата выдачи: {format(new Date(doc.received_date), "dd.MM.yyyy")}
+          </p>
+          <p>{doc.given_by.title}</p>
         </div>
       </div>
     </div>

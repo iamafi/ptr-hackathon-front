@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { FilterIcon, PlusIcon } from "lucide-react";
+import { FileIcon, FilterIcon, PlusIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +9,6 @@ import {
   GetAnalysisItems,
   useAnalysisListInfiniteQuery,
 } from "@/hooks/query/analysis/get-analysis-list-query";
-import Image from "next/image";
 
 const AnalysisPage: NextPage = () => {
   return (
@@ -76,7 +75,12 @@ const AnalysisCard: React.FC<{
     >
       <div className="mb-8 flex flex-row flex-wrap gap-2.5 empty:hidden">
         {analysis.tags.map((tag, i) => (
-          <Badge key={i}>{tag}</Badge>
+          <Badge
+            key={i}
+            className={`text-[${tag.text_color}] bg-[${tag.background_color}`}
+          >
+            {tag.name}
+          </Badge>
         ))}
       </div>
       <div className="flex flex-row justify-between">
@@ -89,11 +93,13 @@ const AnalysisCard: React.FC<{
           </p>
         </div>
         <div className="relative h-12 w-16">
-          <img
-            alt={`${analysis.name} ${analysis.type}`}
-            className="rounded-xs object-cover"
-            src={analysis.file}
-          />
+          {analysis.display_image ? (
+            <img className="rounded-xs object-cover" src={analysis.file} />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center rounded-xs bg-slate-100">
+              <FileIcon />
+            </div>
+          )}
         </div>
       </div>
     </Link>

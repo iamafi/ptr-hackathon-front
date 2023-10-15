@@ -1,4 +1,4 @@
-import { CloudSunIcon, LocateFixedIcon } from "lucide-react";
+import { CloudSunIcon, FolderHeartIcon, LocateFixedIcon } from "lucide-react";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {
@@ -22,6 +22,26 @@ const Home: NextPage = () => {
         </div>
       </div>
       <h1 className="pb-6 pt-8">Инструменты</h1>
+      <div className="flex flex-row gap-4">
+        <div className="bg-red-500 p-4 rounded-sm">
+          <div className="mb-5 flex h-8 w-8 rounded-xs items-center justify-center bg-white">
+            <FolderHeartIcon className="text-red-700" size={20}/>
+          </div>
+          <span className="text-white">Динамика показателей</span>
+        </div>
+        <div className="bg-yellow-500 p-4 rounded-sm">
+          <div className="mb-5 flex h-8 w-8 rounded-xs items-center justify-center bg-white">
+            <FolderHeartIcon className="text-yellow-700" size={20}/>
+          </div>
+          <span className="text-white">Динамика показателей</span>
+        </div>
+      </div>
+      <div className="flex flex-row items-center bg-teal-500 p-4 rounded-sm mt-4 gap-5">
+          <div className="flex h-8 w-8 rounded-xs items-center justify-center bg-white">
+            <FolderHeartIcon className="text-teal-700" size={20}/>
+          </div>
+          <span className="text-white">Динамика показателей</span>
+        </div>
     </>
   );
 };

@@ -7,15 +7,20 @@ import {
 import { apiClient } from "@/lib/axios";
 import type { PaginatedResponse } from "@/types/pagination";
 
-type GetDocumentsReponse = PaginatedResponse<{
+type GetDocumentsReponse = PaginatedResponse<DocumentItem>;
+
+export type DocumentItem = {
+  title: string;
   type: number;
   file: string;
-  given_by: number;
+  given_by: {
+    title: string
+  };
   created_date: string;
   received_date: string;
   expiration_date: string;
-  expired: "string";
-}>;
+  expired: boolean;
+};
 
 export const fetchDocuments: QueryFunction<
   GetDocumentsReponse,
