@@ -38,6 +38,7 @@ export type GetAnalysisResponse = {
     name: string;
     value: number;
     unit: string;
+    diagnosis?: string | null;
   }[];
 };
 

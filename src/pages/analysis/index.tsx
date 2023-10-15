@@ -73,7 +73,7 @@ const AnalysisCard: React.FC<{
       href={`/analysis/${analysisId}`}
       className="rounded-sm border border-slate-100 p-4"
     >
-      <div className="mb-8 flex flex-row flex-wrap gap-2.5 empty:hidden">
+      <div className="mb-4 flex flex-row flex-wrap gap-2.5 empty:hidden">
         {analysis.tags.map((tag, i) => (
           <Badge
             key={i}

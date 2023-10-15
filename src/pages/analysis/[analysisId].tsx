@@ -99,31 +99,29 @@ const AnalysisRowAccordion: React.FC<{
           <div className="flex w-full flex-row justify-between text-sm font-medium">
             <div className="flex flex-row items-center space-x-3">
               <div className="h-2 w-2 rounded-full bg-rose-700" />
-              <span>{entry.name}</span>
+              <span className="">{entry.name}</span>
             </div>
             <div className="space-x-2.5">
-              <span>
+              <div>
                 {entry.value} {entry.unit}
-              </span>
-              <span className="text-slate-400">{"<"} 10.0</span>
+              </div>
+              <div className="whitespace-nowrap text-slate-400">{"<"} 10.0</div>
             </div>
           </div>
         </AccordionTrigger>
         <AccordionContent className="container">
           <div className="mb-5 flex flex-row items-center justify-between">
-            <Badge variant={"destructive"} size={"sm"}>
-              Отклонение
+            <Badge
+              variant={entry.diagnosis ? "destructive" : "success"}
+              size={"sm"}
+            >
+              {entry.diagnosis ? "Отклонение" : "Норма"}
             </Badge>
             <span className="text-sm text-slate-400">
               Норма: {"<"}10.0 г/моль
             </span>
           </div>
-          <p>
-            Магний – биологически активный минерал, жизненно важный для нашего
-            организма. Он принимает участие в процессах выработки энергии,
-            ферментной, мышечной и нервной деятельности, гликолизе, синтезе
-            нуклеиновых кислот и пр.
-          </p>
+          <p>{entry.diagnosis}</p>
         </AccordionContent>
       </AccordionItem>
     </Accordion>
