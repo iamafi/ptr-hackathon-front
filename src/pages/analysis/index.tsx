@@ -77,7 +77,10 @@ const AnalysisCard: React.FC<{
         {analysis.tags.map((tag, i) => (
           <Badge
             key={i}
-            className={`text-[${tag.text_color}] bg-[${tag.background_color}`}
+            style={{
+              color: tag.text_color,
+              backgroundColor: tag.background_color,
+            }}
           >
             {tag.name}
           </Badge>
@@ -94,7 +97,10 @@ const AnalysisCard: React.FC<{
         </div>
         <div className="relative h-12 w-16">
           {analysis.display_image ? (
-            <img className="rounded-xs object-cover" src={analysis.file} />
+            <img
+              className="h-12 w-16 rounded-xs object-cover"
+              src={analysis.file}
+            />
           ) : (
             <div className="flex h-full w-full items-center justify-center rounded-xs bg-slate-100">
               <FileIcon />

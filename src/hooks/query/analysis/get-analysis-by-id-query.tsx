@@ -30,6 +30,7 @@ export type GetAnalysisResponse = {
   name: string;
   type: "quantitative" | "qualitative";
   tags: string[];
+  display_image?: boolean;
   file: string;
   analysis_date: string;
   diagnosis: string;

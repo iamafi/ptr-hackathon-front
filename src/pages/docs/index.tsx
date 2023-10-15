@@ -1,24 +1,22 @@
-import { PlusIcon } from "lucide-react";
+import { FileIcon } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import type { CustomNextPage } from "@/types";
 import { WithDivider } from "@/components/with-divider";
 import {
-  DocumentItem,
+  type DocumentItem,
   useDocumentsInfiniteQuery,
 } from "@/hooks/query/documents/get-documents-query";
 import { format } from "date-fns";
+import { useVaccInfiniteQuery } from "@/hooks/query/documents/get-vacc-query";
+import Link from "next/link";
 
 const AnalysisPage: CustomNextPage = () => {
   return (
     <>
       <div className="container mb-8 flex flex-row justify-between">
         <h1 className="text-3xl font-bold">Документы</h1>
-        <Button className={"h-10 w-10"} variant={"default"} size={"icon"}>
-          <PlusIcon />
-        </Button>
       </div>
       <Tabs defaultValue="docs" className="mt-4">
         <div className="container">
@@ -27,8 +25,13 @@ const AnalysisPage: CustomNextPage = () => {
             <TabsTrigger value="vaccination">Вакцинация</TabsTrigger>
           </TabsList>
         </div>
-        <DocsContent />
-        <VaccContent />
+        <TabsContent value="docs">
+          <DocsContent />
+        </TabsContent>
+
+        <TabsContent value="vaccination">
+          <VaccContent />
+        </TabsContent>
       </Tabs>
     </>
   );
@@ -46,31 +49,48 @@ const DocsContent: React.FC = () => {
   }
 
   return (
-    <TabsContent value="docs">
-      <WithDivider>
-        {data.pages.flatMap((page) =>
-          page.results.map((doc, i) => (
-            <div className="container" key={i}>
+    <WithDivider>
+      {data.pages.flatMap((page) =>
+        page.results.map((doc, i) => {
+          return (
+            <Link
+              href={`/docs/certificates/${doc.id}`}
+              className="container block"
+              key={i}
+            >
               <DocumentPreviewItem doc={doc} key={i} />
-            </div>
-          )),
-        )}
-      </WithDivider>
-    </TabsContent>
+            </Link>
+          );
+        }),
+      )}
+    </WithDivider>
   );
 };
 
 const VaccContent: React.FC = () => {
+  const { data, isLoading } = useVaccInfiniteQuery();
+  if (isLoading) {
+    return <div className="container">Загрузка...</div>;
+  }
+
+  if (!data?.pages[0]?.results?.length) {
+    return <div className="container">Нет документов</div>;
+  }
+
   return (
-    <TabsContent value="vaccination">
-      <WithDivider>
-        {Array.from({ length: 10 }).map((doc, i) => (
-          <div className="container" key={i}>
+    <WithDivider>
+      {data.pages.flatMap((page) =>
+        page.results.map((doc, i) => (
+          <Link
+            href={`/docs/vaccines/${doc.id}`}
+            className="container block"
+            key={i}
+          >
             <DocumentPreviewItem doc={doc} key={i} />
-          </div>
-        ))}
-      </WithDivider>
-    </TabsContent>
+          </Link>
+        )),
+      )}
+    </WithDivider>
   );
 };
 
@@ -81,7 +101,13 @@ const DocumentPreviewItem: React.FC<{
     <div className="flex flex-row space-x-5 py-4">
       <div>
         <div className="relative h-16 w-16">
-          <img className="rounded-xs object-cover" src={doc.file} />
+          {doc.display_image ? (
+            <img className="h-16 w-16 rounded-xs object-cover" src={doc.file} />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center rounded-xs bg-slate-100">
+              <FileIcon />
+            </div>
+          )}
         </div>
       </div>
       <div className="flex w-full flex-col space-y-2">

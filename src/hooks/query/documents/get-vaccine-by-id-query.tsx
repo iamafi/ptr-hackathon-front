@@ -6,26 +6,7 @@ import {
 
 import { apiClient } from "@/lib/axios";
 
-/**
- * Swagger type:
- * "url": "string",
-  "name": "string",
-  "type": "quantitative",
-  "tags": [
-    "string"
-  ],
-  "file": "string",
-  "analysis_date": "2023-10-15",
-  "diagnosis": "string",
-  "quantitative_analysis_entries": [
-    {
-      "name": "string",
-      "value": 0,
-      "unit": "string"
-    }
-  ]
- */
-type GetAnalysisResponse = {
+type GetVaccineResponse = {
   created_date: string;
   display_image: boolean;
   expiration_date: string;
@@ -43,40 +24,40 @@ type GetAnalysisResponse = {
 
 type UseSessionQueryOptions = Omit<
   UseQueryOptions<
-    GetAnalysisResponse,
+    GetVaccineResponse,
     unknown,
-    GetAnalysisResponse,
+    GetVaccineResponse,
     [string, string | null]
   >,
   "queryFn"
 >;
 
-export const fetchDocById = async (
+export const fetchVaccineById = async (
   ctx: QueryFunctionContext<[string, string | null], unknown>,
 ) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, docId] = ctx.queryKey;
+  const [_, vaccId] = ctx.queryKey;
 
-  if (!docId) {
+  if (!vaccId) {
     throw new Error("postId is required");
   }
 
-  const { data } = await apiClient.get<GetAnalysisResponse>(
-    `/medical_tests/medical_certificates/${docId}`,
+  const { data } = await apiClient.get<GetVaccineResponse>(
+    `/medical_tests/vaccines/${vaccId}`,
   );
   return data;
 };
 
-export const useDocByIdQuery = ({
+export const useVaccineByIdQuery = ({
   ...options
 }: UseSessionQueryOptions = {}) => {
   return useQuery<
-    GetAnalysisResponse,
+    GetVaccineResponse,
     unknown,
-    GetAnalysisResponse,
+    GetVaccineResponse,
     [string, string | null]
   >({
-    queryFn: fetchDocById,
+    queryFn: fetchVaccineById,
     ...options,
   });
 };

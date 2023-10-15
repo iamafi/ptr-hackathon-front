@@ -1,10 +1,11 @@
-import { CloudSunIcon, FolderHeartIcon, LocateFixedIcon } from "lucide-react";
+import { CloudSunIcon, FileHeartIcon, FolderHeartIcon, HeartPulse, LocateFixedIcon } from "lucide-react";
 import type { NextPage } from "next";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
     <>
-      <h1 className="mb-4 text-3xl font-bold">Добро пожаловать!</h1>
+      <h1 className="mb-1 text-3xl font-bold">Добро пожаловать!</h1>
       <p className="mb-8">Дайджест вашего здоровья на сегодня:</p>
       <div className="flex rounded-sm border border-slate-100 px-4 py-5">
         <div className="flex w-full flex-row justify-between">
@@ -21,27 +22,27 @@ const Home: NextPage = () => {
           <CloudSunIcon className="h-[66px] w-[66px] text-slate-400" />
         </div>
       </div>
-      <h1 className="pb-6 pt-8">Инструменты</h1>
+      <h1 className="pb-4 pt-8 text-xl font-semibold">Инструменты</h1>
       <div className="flex flex-row gap-4">
-        <div className="bg-red-500 p-4 rounded-sm">
-          <div className="mb-5 flex h-8 w-8 rounded-xs items-center justify-center bg-white">
-            <FolderHeartIcon className="text-red-700" size={20}/>
+        <div className="rounded-sm bg-red-500 p-4">
+          <div className="mb-5 flex h-8 w-8 items-center justify-center rounded-xs bg-white">
+            <FolderHeartIcon className="text-red-700" size={20} />
           </div>
           <span className="text-white">Динамика показателей</span>
         </div>
-        <div className="bg-yellow-500 p-4 rounded-sm">
-          <div className="mb-5 flex h-8 w-8 rounded-xs items-center justify-center bg-white">
-            <FolderHeartIcon className="text-yellow-700" size={20}/>
+        <div className="rounded-sm bg-yellow-500 p-4">
+          <div className="mb-5 flex h-8 w-8 items-center justify-center rounded-xs bg-white">
+            <FileHeartIcon className="text-yellow-700" size={20} />
           </div>
-          <span className="text-white">Динамика показателей</span>
+          <span className="text-white">Создать отчет для врача</span>
         </div>
       </div>
-      <div className="flex flex-row items-center bg-teal-500 p-4 rounded-sm mt-4 gap-5">
-          <div className="flex h-8 w-8 rounded-xs items-center justify-center bg-white">
-            <FolderHeartIcon className="text-teal-700" size={20}/>
-          </div>
-          <span className="text-white">Динамика показателей</span>
+      <Link href={"/analysis/submit"} className="mt-4 flex flex-row items-center gap-5 rounded-sm bg-teal-500 p-4">
+        <div className="flex h-8 w-8 items-center justify-center rounded-xs bg-white">
+          <HeartPulse className="text-teal-700" size={20} />
         </div>
+        <span className="text-white">Загрузить снимок/анализы</span>
+      </Link>
     </>
   );
 };

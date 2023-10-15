@@ -11,12 +11,11 @@ type GetDocumentsReponse = PaginatedResponse<DocumentItem>;
 
 export type DocumentItem = {
   id: number;
-  display_image: boolean;
   title: string;
   type: number;
   file: string;
   given_by: {
-    title: string;
+    title: string
   };
   created_date: string;
   received_date: string;
@@ -32,7 +31,7 @@ export const fetchDocuments: QueryFunction<
   const url = pageParam?.next
     ? new URL(pageParam.next)
     : new URL(
-        "/api/medical_tests/medical_certificates",
+        "/api/medical_tests/vaccines",
         apiClient.defaults.baseURL,
       );
   const { data } = await apiClient.get<GetDocumentsReponse>(url.toString());
@@ -40,9 +39,9 @@ export const fetchDocuments: QueryFunction<
   return data;
 };
 
-export const useDocumentsInfiniteQuery = () => {
+export const useVaccInfiniteQuery = () => {
   return useInfiniteQuery<GetDocumentsReponse>({
-    queryKey: ["documents"],
+    queryKey: ["vacc"],
     queryFn: fetchDocuments,
     getNextPageParam: (lastPage) => {
       if (!lastPage.next) {

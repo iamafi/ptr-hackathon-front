@@ -1,4 +1,4 @@
-import { DownloadIcon } from "lucide-react";
+import { DownloadIcon, FileIcon } from "lucide-react";
 
 import type { CustomNextPage } from "@/types";
 import {
@@ -41,12 +41,18 @@ const AnalysisByIdPage: CustomNextPage = () => {
       <div className="mb-6 flex flex-col items-center space-y-4">
         {/* Image placeholder */}
         <div className="relative h-28 w-44">
-          <Image
-            alt={`${analysis.name} ${analysis.type}`}
-            className="rounded-xs object-cover"
-            fill
-            src={analysis.file}
-          />
+          {analysis.display_image !== false ? (
+            <Image
+              alt={`${analysis.name} ${analysis.type}`}
+              className="rounded-xs object-cover"
+              fill
+              src={analysis.file}
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center bg-slate-100">
+              <FileIcon className="h-8 w-8 text-slate-400" />
+            </div>
+          )}
         </div>
         <div className="flex flex-col items-center">
           <div className="flex flex-row items-center space-x-2.5">
@@ -66,10 +72,15 @@ const AnalysisByIdPage: CustomNextPage = () => {
           </span>
         </div>
       </div>
+      {analysis.diagnosis && (
+        <div className="container mb-6">
+          <h4 className="text-lg font-semibold">Диагноз:</h4>
+          <p className="text-sm text-slate-700">
+            {analysis.diagnosis || "Не указано"}
+          </p>
+        </div>
+      )}
       <div>
-        {analysis.quantitative_analysis_entries.length === 0 && (
-          <div className="container">Нет амбулаторных показателей</div>
-        )}
         {analysis.quantitative_analysis_entries.map((entry, i) => (
           <AnalysisRowAccordion key={i} entry={entry} />
         ))}
