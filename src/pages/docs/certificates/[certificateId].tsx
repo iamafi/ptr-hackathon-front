@@ -29,10 +29,8 @@ const CertificateByIdPage: CustomNextPage = () => {
       <div className="mb-6 flex flex-col items-center space-y-4">
         <div className="relative h-28 w-44">
           {certificate.display_image !== false ? (
-            <Image
-              alt={`${certificate.id}-${certificate.type}`}
-              className="rounded-xs object-cover"
-              fill
+            <img
+              className="h-28 w-44 rounded-xs object-cover"
               src={certificate.file}
             />
           ) : (

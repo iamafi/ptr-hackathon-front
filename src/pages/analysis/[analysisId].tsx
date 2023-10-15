@@ -15,6 +15,8 @@ import {
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { format } from "date-fns";
+import { cn } from "@/utils";
+import { Layout } from "@/components/layout/root-layout";
 
 const AnalysisByIdPage: CustomNextPage = () => {
   const router = useRouter();
@@ -37,15 +39,13 @@ const AnalysisByIdPage: CustomNextPage = () => {
   }
 
   return (
-    <>
+    <Layout useContainer={false} variant={"panel"} title={analysis.name}>
       <div className="mb-6 flex flex-col items-center space-y-4">
         {/* Image placeholder */}
         <div className="relative h-28 w-44">
           {analysis.display_image !== false ? (
-            <Image
-              alt={`${analysis.name} ${analysis.type}`}
-              className="rounded-xs object-cover"
-              fill
+            <img
+              className="rounded-xs object-cover h-28 w-44"
               src={analysis.file}
             />
           ) : (
@@ -85,7 +85,7 @@ const AnalysisByIdPage: CustomNextPage = () => {
           <AnalysisRowAccordion key={i} entry={entry} />
         ))}
       </div>
-    </>
+    </Layout>
   );
 };
 
@@ -98,7 +98,12 @@ const AnalysisRowAccordion: React.FC<{
         <AccordionTrigger className="container">
           <div className="flex w-full flex-row justify-between text-sm font-medium">
             <div className="flex flex-row items-center space-x-3">
-              <div className="h-2 w-2 rounded-full bg-rose-700" />
+              <div
+                className={cn(
+                  "h-2 w-2 rounded-full",
+                  entry.diagnosis ? "bg-rose-700" : "bg-green-700",
+                )}
+              />
               <span className="">{entry.name}</span>
             </div>
             <div className="space-x-2.5">
@@ -129,9 +134,9 @@ const AnalysisRowAccordion: React.FC<{
 };
 
 AnalysisByIdPage.layout = {
+  enabled: false,
   useContainer: false,
   variant: "panel",
-  title: "Для эндокринолога",
 };
 
 export default AnalysisByIdPage;

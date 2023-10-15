@@ -10,7 +10,7 @@ export type CustomAppProps = AppProps<{
 };
 
 export type CustomNextPage = NextPage & {
-  layout?: LayoutProps;
+  layout?: LayoutProps
   auth?: {
     required?: boolean;
   };

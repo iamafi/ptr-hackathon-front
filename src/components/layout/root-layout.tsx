@@ -15,14 +15,20 @@ type LayoutVariantProps =
 
 export type LayoutProps = {
   useContainer?: boolean;
+  enabled?: boolean;
 } & LayoutVariantProps;
 
 export const Layout: React.FC<React.PropsWithChildren<LayoutProps>> = ({
   children,
   variant = "default",
   useContainer = true,
+  enabled = true,
   ...props
 }) => {
+  if (!enabled) {
+    return <>{children}</>;
+  }
+
   return (
     <>
       <Head>
