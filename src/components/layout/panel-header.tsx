@@ -24,7 +24,7 @@ export const PanelHeader: React.FC<PanelHeaderProps> = ({
   };
 
   return (
-    <div className="flex h-16 flex-row justify-between items-center px-5 py-3">
+    <div className="container sticky top-0 flex h-16 flex-row items-center justify-between bg-background/90 py-3 backdrop-blur-lg">
       <Button
         variant={"ghost"}
         size={"icon"}
@@ -33,7 +33,7 @@ export const PanelHeader: React.FC<PanelHeaderProps> = ({
       >
         <ArrowLeftIcon size={24} />
       </Button>
-      {title && <h1 className="font-semibold text-base">{title}</h1>}
+      {title && <h1 className="text-base font-semibold">{title}</h1>}
       <Button
         variant={"ghost"}
         size={"icon"}

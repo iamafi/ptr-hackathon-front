@@ -12,7 +12,7 @@ import { cn } from "@/utils";
 
 export const Navbar = () => {
   return (
-    <div className="container sticky inset-x-0 bottom-0 flex flex-row items-center justify-between rounded-2xl bg-background pb-3 pt-4 shadow-navbar">
+    <div className="container sticky inset-x-0 bottom-0 flex flex-row items-center justify-between rounded-2xl bg-background/90 pb-3 pt-4 shadow-navbar backdrop-blur-lg">
       <NavbarButton title="Home" href="/" icon={<HomeIcon />} />
       <NavbarButton title="Анализ" href="/analysis" icon={<HeartPulseIcon />} />
       <NavbarButton

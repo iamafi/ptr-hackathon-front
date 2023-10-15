@@ -2,7 +2,9 @@ import { Layout } from "@/components/layout/root-layout";
 
 import "../styles/globals.css";
 
-import type { CustomAppProps } from "@/components/types";
+import type { CustomAppProps } from "@/types";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
 
 const MyApp = (props: CustomAppProps) => {
   const {
@@ -10,10 +12,14 @@ const MyApp = (props: CustomAppProps) => {
     pageProps: { dehydratedState, ...pageProps },
   } = props;
 
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
-    <Layout {...Component.layout}>
-      <Component {...pageProps} />
-    </Layout>
+    <QueryClientProvider client={queryClient}>
+      <Layout {...Component.layout}>
+        <Component {...pageProps} />
+      </Layout>
+    </QueryClientProvider>
   );
 };
 
