@@ -104,13 +104,12 @@ const AnalysisRowAccordion: React.FC<{
                   entry.diagnosis ? "bg-rose-700" : "bg-green-700",
                 )}
               />
-              <span className="line-clamp-1 text-left">{entry.name}</span>
+              <span className="line-clamp-2 text-left">{entry.name}</span>
             </div>
             <div className="flex flex-row flex-nowrap space-x-2.5">
-              <div>
+              <div className="whitespace-nowrap">
                 {entry.value} {entry.unit}
               </div>
-              <div className="whitespace-nowrap text-slate-400">{"<"} 10.0</div>
             </div>
           </div>
         </AccordionTrigger>
@@ -122,9 +121,6 @@ const AnalysisRowAccordion: React.FC<{
             >
               {entry.diagnosis ? "Отклонение" : "Норма"}
             </Badge>
-            <span className="text-sm text-slate-400">
-              Норма: {"<"}10.0 г/моль
-            </span>
           </div>
           <p>{entry.diagnosis}</p>
         </AccordionContent>
