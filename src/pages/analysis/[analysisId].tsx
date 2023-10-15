@@ -45,7 +45,7 @@ const AnalysisByIdPage: CustomNextPage = () => {
         <div className="relative h-28 w-44">
           {analysis.display_image !== false ? (
             <img
-              className="rounded-xs object-cover h-28 w-44"
+              className="h-28 w-44 rounded-xs object-cover"
               src={analysis.file}
             />
           ) : (
@@ -97,16 +97,16 @@ const AnalysisRowAccordion: React.FC<{
       <AccordionItem value="item-1">
         <AccordionTrigger className="container">
           <div className="flex w-full flex-row justify-between text-sm font-medium">
-            <div className="flex flex-row items-center space-x-3">
+            <div className="flex w-full flex-row items-center space-x-3">
               <div
                 className={cn(
                   "h-2 w-2 rounded-full",
                   entry.diagnosis ? "bg-rose-700" : "bg-green-700",
                 )}
               />
-              <span className="">{entry.name}</span>
+              <span className="line-clamp-1 text-left">{entry.name}</span>
             </div>
-            <div className="space-x-2.5">
+            <div className="flex flex-row flex-nowrap space-x-2.5">
               <div>
                 {entry.value} {entry.unit}
               </div>
