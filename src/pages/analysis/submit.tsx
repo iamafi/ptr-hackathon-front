@@ -181,7 +181,7 @@ const SubmitAnalysisPage: CustomNextPage = () => {
               <FormControl>
                 <Input
                   type="file"
-                  accept="application/pdf,image/*"
+                  accept="image/*"
                   placeholder="Загрузите файл"
                   onChange={(event) => {
                     const { files, displayUrl } = getImageData(event);

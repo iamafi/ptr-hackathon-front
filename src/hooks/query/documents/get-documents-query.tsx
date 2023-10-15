@@ -25,7 +25,7 @@ export const fetchDocuments: QueryFunction<
   const url = pageParam?.next
     ? new URL(pageParam.next)
     : new URL(
-        "/api/medical_certificates/medical_tests",
+        "/api/medical_tests/medical_certificates",
         apiClient.defaults.baseURL,
       );
   const { data } = await apiClient.get<GetDocumentsReponse>(url.toString());

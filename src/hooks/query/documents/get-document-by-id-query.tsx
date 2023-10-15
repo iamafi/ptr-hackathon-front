@@ -25,7 +25,7 @@ import { apiClient } from "@/lib/axios";
     }
   ]
  */
-export type GetAnalysisResponse = {
+type GetAnalysisResponse = {
   url: string;
   name: string;
   type: "quantitative" | "qualitative";
@@ -50,22 +50,22 @@ type UseSessionQueryOptions = Omit<
   "queryFn"
 >;
 
-export const fetchAnalysisById = async (
+export const fetchDocById = async (
   ctx: QueryFunctionContext<[string, string | null], any>,
 ) => {
-  const [_, postId] = ctx.queryKey;
+  const [_, docId] = ctx.queryKey;
 
-  if (!postId) {
+  if (!docId) {
     throw new Error("postId is required");
   }
 
   const { data } = await apiClient.get<GetAnalysisResponse>(
-    `/analysis/analysis_entries/${postId}`,
+    `/medical_certificates/medical_tests/${docId}`,
   );
   return data;
 };
 
-export const useAnalysisByIdQuery = ({
+export const useDocByIdQuery = ({
   ...options
 }: UseSessionQueryOptions = {}) => {
   return useQuery<
@@ -74,7 +74,7 @@ export const useAnalysisByIdQuery = ({
     GetAnalysisResponse,
     [string, string | null]
   >({
-    queryFn: fetchAnalysisById,
+    queryFn: fetchDocById,
     ...options,
   });
 };

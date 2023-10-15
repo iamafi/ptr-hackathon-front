@@ -74,7 +74,7 @@ const AnalysisCard: React.FC<{
       href={`/analysis/${analysisId}`}
       className="rounded-sm border border-slate-100 p-4"
     >
-      <div className="mb-8 flex flex-row flex-wrap gap-2.5">
+      <div className="mb-8 flex flex-row flex-wrap gap-2.5 empty:hidden">
         {analysis.tags.map((tag, i) => (
           <Badge key={i}>{tag}</Badge>
         ))}
@@ -89,10 +89,9 @@ const AnalysisCard: React.FC<{
           </p>
         </div>
         <div className="relative h-12 w-16">
-          <Image
+          <img
             alt={`${analysis.name} ${analysis.type}`}
             className="rounded-xs object-cover"
-            fill
             src={analysis.file}
           />
         </div>
